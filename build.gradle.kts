@@ -385,12 +385,53 @@ dokka {
   }
 }
 
+/**
+ * Makes every absolute link of the generated documentation open in a new tab.
+ *
+ * The documentation of each type *is* a link to its normative definition, so following one must not
+ * take the reader out of the API documentation they were reading. Dokka exposes no setting for
+ * this: `customAssets` are copied into `images/` and never referenced, so a script cannot be
+ * injected that way, and overriding the page template would tie us to the internals of a Dokka
+ * release. Rewriting the generated HTML keeps the whole thing to one task, works with JavaScript
+ * disabled, and is idempotent -- an anchor that already carries a target is left alone.
+ */
+val openExternalLinksInNewTab: TaskProvider<Task> =
+    tasks.register("openExternalLinksInNewTab") {
+      description = "Makes the external links of the generated documentation open in a new tab."
+      dependsOn("dokkaGeneratePublicationHtml")
+      val htmlDir = layout.buildDirectory.dir("dokka/html")
+      val externalAnchor = Regex("""<a (?![^>]*target=)([^>]*href="https?://[^"]*")""")
+      doLast {
+        var links = 0
+        var files = 0
+        htmlDir
+            .get()
+            .asFile
+            .walkTopDown()
+            .filter { it.isFile && it.extension == "html" }
+            .forEach { file ->
+              var found = 0
+              val rewritten =
+                  externalAnchor.replace(file.readText()) { match ->
+                    found++
+                    """<a target="_blank" rel="noopener noreferrer" """ + match.groupValues[1]
+                  }
+              if (found > 0) {
+                file.writeText(rewritten)
+                files++
+                links += found
+              }
+            }
+        logger.lifecycle("$links external link(s) in $files file(s) now open in a new tab.")
+      }
+    }
+
 // The class diagram is reached from the home page of the documentation only, so it is copied next
 // to it rather than linked from the published list of versions.
 val copyUmlToDokka =
     tasks.register<Copy>("copyUmlToDokka") {
       description = "Copies the class diagram into the Dokka output directory."
-      dependsOn("dokkaGeneratePublicationHtml")
+      dependsOn(openExternalLinksInNewTab)
       from(renderUml)
       into(layout.buildDirectory.dir("dokka/html"))
     }

@@ -112,6 +112,11 @@ matter of taste: the specification anchors a type as `[[type_<Name>]]`, so a typ
 This cannot be a unit test: KDoc is erased at compile time, so no `kotlin.test` can read it. The verification
 therefore lives in the build, which reads the source text.
 
+**External links open in a new tab.** Since the documentation of a type *is* a link to the specification, following
+one must not replace the page the reader came for. Dokka offers no setting for this, so `openExternalLinksInNewTab`
+adds `target="_blank" rel="noopener noreferrer"` to the absolute links of the generated HTML once Dokka has run.
+Relative links are left alone, and the rewrite is idempotent.
+
 ### Versioning
 
 This library and the specification are synchronised on the **MAJOR.MINOR** version only, each side advancing its own
