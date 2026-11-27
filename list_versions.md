@@ -1,3 +1,4 @@
-| Version | Documents |
-|:---:|---|
-| 1.0.0-SNAPSHOT | [API documentation](1.0.0-SNAPSHOT) |
+| Version |
+|:---|
+| [1.0.0-SNAPSHOT](1.0.0-SNAPSHOT) <span class="doc-badge doc-badge--snapshot">snapshot</span> |
+{: .doc-versions}
