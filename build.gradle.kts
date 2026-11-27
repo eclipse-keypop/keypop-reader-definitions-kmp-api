@@ -229,7 +229,7 @@ val checkSpecConsistency: TaskProvider<Task> =
         var types = 0
         val declaration =
             Regex(
-                """(?m)^public\s+(?:object|enum\s+class|annotation\s+class|class|interface)\s+(\w+)""")
+                """(?m)^public\s+(?:(?:data|sealed|value|abstract|open|inline|fun|enum|annotation)\s+)*(?:class|interface|object)\s+(\w+)""")
         kotlinSources.files
             .filter { it.isFile }
             .sortedBy { it.path }
