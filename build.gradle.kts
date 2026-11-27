@@ -239,7 +239,11 @@ val checkSpecConsistency: TaskProvider<Task> =
               declaration.findAll(text).forEach { match ->
                 types++
                 val type = match.groupValues[1]
-                val link = "$expectedUrl#type_$type"
+                // The specification names an error without a suffix -- `CardCommunication`
+                // -- where Kotlin expects `CardCommunicationException`. The anchor is
+                // therefore derived from the name stripped of that suffix.
+                val anchor = type.removeSuffix("Exception")
+                val link = "$expectedUrl#type_$anchor"
                 if (!text.contains(link)) {
                   val line = text.take(match.range.first).count { it == '\n' } + 1
                   val other = Regex("""#type_(\w+)""").find(text)?.groupValues?.get(1)
