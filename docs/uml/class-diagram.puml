@@ -1,0 +1,118 @@
+@startuml
+title
+    <#transparent,#transparent>|<img:../assets/logo-icon.svg>|<size:0> </size>%newline()  Keypop Reader Definitions KMP API — UML Class Diagram |
+end title
+
+' == THEME (class) ==
+' Same theme as the UML class diagram of the specification this API transcribes, so that the two
+' are read as one family. Only the notation differs: it is Kotlin here, and language-independent
+' there.
+
+'Couleurs issues de : https://htmlcolorcodes.com/fr/tableau-de-couleur/tableau-de-couleur-design-plat/
+!define C_GREY1 F8F9F9
+!define C_GREY2 F2F3F4
+!define C_GREY3 E5E7E9
+!define C_GREY4 D7DBDD
+!define C_GREY5 CACFD2
+!define C_GREY6 BDC3C7
+!define C_LINK 3498DB
+!define C_USE 27AE60
+!define C_THROW 2C3E50
+
+' -- Styles that don't work with new version of plantuml --
+skinparam stereotypeABorderColor #A9DCDF
+skinparam stereotypeIBorderColor #B4A7E5
+skinparam stereotypeCBorderColor #ADD1B2
+skinparam stereotypeEBorderColor #EB937F
+' -- END --
+
+skinparam ClassBorderThickness 2
+skinparam ArrowThickness 2
+
+' Compact header
+skinparam TitleFontSize 16
+
+' Yellow
+skinparam ClassBackgroundColor #FEFECE
+skinparam ClassBorderColor #D4AC0D
+' Red
+skinparam ClassBackgroundColor<<red>> #FDEDEC
+skinparam ClassBorderColor<<red>> #E74C3C
+hide <<red>> stereotype
+' Purple
+skinparam ClassBackgroundColor<<purple>> #F4ECF7
+skinparam ClassBorderColor<<purple>> #8E44AD
+hide <<purple>> stereotype
+' blue
+skinparam ClassBackgroundColor<<blue>> #EBF5FB
+skinparam ClassBorderColor<<blue>> #3498DB
+hide <<blue>> stereotype
+' Green
+skinparam ClassBackgroundColor<<green>> #E9F7EF
+skinparam ClassBorderColor<<green>> #27AE60
+hide <<green>> stereotype
+' Grey
+skinparam ClassBackgroundColor<<grey>> #EAECEE
+skinparam ClassBorderColor<<grey>> #2C3E50
+hide <<grey>> stereotype
+
+' == CONTENT ==
+
+<style>
+legend {
+  BackGroundColor transparent
+  LineColor transparent
+  LineThickness 0
+  Padding 0
+  Margin 8
+  FontSize 11
+}
+</style>
+legend top
+<#F2F3F4,#D7DBDD>|= Text styles |= Object colors |
+<#FFFFFF,#D7DBDD>| <color:blue>**Element**</color> new since the last version |<#E9F7EF> <color:#27AE60>Data, constants, enumeration or error</color> |
+<#FFFFFF,#D7DBDD>| <color:red><s>**Element**</s></color> deprecated since the last version | |
+<#FFFFFF,#D7DBDD>| <s>**Element**</s> deprecated | |
+<#FFFFFF,#D7DBDD>| <color:grey>**Element**</color> work in progress | |
+end legend
+
+package "org.eclipse.keypop.reader.definitions" as api {
+
+class "ReaderDefinitionsApiProperties" as ApiProperties <<object>> <<green>> {
+    +const val VERSION: String = "1.0"
+}
+enum "RfTechnology" as RfTechnology <<green>> {
+    +ISO_14443_AB
+    +INNOVATRON_B_PRIME
+    +FELICA
+    +ISO_15693
+}
+enum "CardType" as CardType <<green>> {
+    +ISO_7816_3
+    +ISO_14443_4
+    +ISO_14443_3A_MIFARE_CLASSIC_1K
+    +ISO_14443_3A_MIFARE_CLASSIC_4K
+    +ISO_14443_3A_MIFARE_ULTRALIGHT
+    +ISO_14443_3B_ST25_SRT512
+    +INNOVATRON_B_PRIME
+    +FELICA
+    +ISO_15693
+    +UNKNOWN
+}
+}
+
+' Associations
+
+' == LAYOUT ==
+
+' == STYLE ==
+
+package api #C_GREY1 {}
+
+center footer
+<size:10><color:#566573>Keypop Reader Definitions KMP API — transcription of the Terminal Reader Definitions API 1.0</color></size>
+<size:10><color:#566573>Copyright © Calypso Networks Association — MIT (https://opensource.org/license/mit/)</color></size>
+<size:10><color:#566573>https://docs.keypop.org/keypop-reader-definitions-kmp-api</color></size>
+end footer
+
+@enduml
